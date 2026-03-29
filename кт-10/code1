@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+interface IEntity
+{
+    int Id { get; set; }
+}
+
+interface IRepository<T> where T : IEntity
+{
+    void Add(T item);
+    void Delete(T item);
+    T FindById(int id);
+    IEnumerable<T> GetAll();
+}
+
+class Product : IEntity
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public decimal Price { get; set; }
+}
+
+class Customer : IEntity
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string Address { get; set; } = "";
+}
+
+class ProductRepository : IRepository<Product>
+{
+    private List<Product> products = new List<Product>();
+
+    public void Add(Product item)
+    {
+        products.Add(item);
+    }
+
+    public void Delete(Product item)
+    {
+        products.Remove(item);
+    }
+
+    public Product FindById(int id)
+    {
+        return products.FirstOrDefault(p => p.Id == id);
+    }
+
+    public IEnumerable<Product> GetAll()
+    {
+        return products;
+    }
+}
+
+class CustomerRepository : IRepository<Customer>
+{
+    private List<Customer> customers = new List<Customer>();
+
+    public void Add(Customer item)
+    {
+        customers.Add(item);
+    }
+
+    public void Delete(Customer item)
+    {
+        customers.Remove(item);
+    }
+
+    public Customer FindById(int id)
+    {
+        return customers.FirstOrDefault(c => c.Id == id);
+    }
+
+    public IEnumerable<Customer> GetAll()
+    {
+        return customers;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        var productRepo = new ProductRepository();
+
+        productRepo.Add(new Product { Id = 1, Name = "полуселиконовая резинка для ног, из плюмбуса", Price = 1000 });
+        productRepo.Add(new Product { Id = 2, Name = "серо-бурмалдиновая перемога", Price = 50 });
+
+        var product = productRepo.FindById(1);
+        Console.WriteLine($"Найден продукт: {product.Name}");
+
+        foreach (var p in productRepo.GetAll())
+        {
+            Console.WriteLine(p.Name);
+        }
+    }
+}
