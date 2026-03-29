@@ -1,0 +1,150 @@
+using System;
+interface IList<T>
+{
+    void Add(T item);
+    void Remove(T item);
+    T Get(int index);
+    void Set(int index, T item);
+    int Count { get; }
+}
+
+class ArrayList<T> : IList<T>
+{
+    private T[] items = new T[10];
+    private int count = 0;
+    public int Count => count;
+    public void Add(T item)
+    {
+        if (count == items.Length)
+        {
+            Array.Resize(ref items, items.Length * 2);
+        }
+
+        items[count++] = item;
+    }
+
+    public void Remove(T item)
+    {
+        int index = Array.IndexOf(items, item);
+        if (index >= 0)
+        {
+            for (int i = index; i < count - 1; i++)
+            {
+                items[i] = items[i + 1];
+            }
+            count--;
+        }
+    }
+
+    public T Get(int index)
+    {
+        return items[index];
+    }
+
+    public void Set(int index, T item)
+    {
+        items[index] = item;
+    }
+}
+
+class Node<T>
+{
+    public T Data;
+    public Node<T> Next;
+
+    public Node(T data)
+    {
+        Data = data;
+    }
+}
+
+class LinkedList<T> : IList<T>
+{
+    private Node<T> head;
+    private int count = 0;
+    public int Count => count;
+    public void Add(T item)
+    {
+        Node<T> newNode = new Node<T>(item);
+
+        if (head == null)
+        {
+            head = newNode;
+        }
+        else
+        {
+            Node<T> current = head;
+            while (current.Next != null)
+                current = current.Next;
+
+            current.Next = newNode;
+        }
+
+        count++;
+    }
+
+    public void Remove(T item)
+    {
+        if (head == null) return;
+
+        if (head.Data.Equals(item))
+        {
+            head = head.Next;
+            count--;
+            return;
+        }
+
+        Node<T> current = head;
+        while (current.Next != null)
+        {
+            if (current.Next.Data.Equals(item))
+            {
+                current.Next = current.Next.Next;
+                count--;
+                return;
+            }
+            current = current.Next;
+        }
+    }
+
+    public T Get(int index)
+    {
+        Node<T> current = head;
+        for (int i = 0; i < index; i++)
+            current = current.Next;
+
+        return current.Data;
+    }
+
+    public void Set(int index, T item)
+    {
+        Node<T> current = head;
+        for (int i = 0; i < index; i++)
+            current = current.Next;
+
+        current.Data = item;
+    }
+}
+
+class Person
+{
+    public string Name { get; set; } = "";
+}
+
+class Program
+{
+    static void Main()
+    {
+        IList<int> intList = new ArrayList<int>();
+        intList.Add(10);
+        intList.Add(20);
+        Console.WriteLine(intList.Get(0));
+        IList<string> strList = new LinkedList<string>();
+        strList.Add("Hello");
+        strList.Add("World");
+        Console.WriteLine(strList.Get(1));
+        IList<Person> personList = new ArrayList<Person>();
+        personList.Add(new Person { Name = "Ваня" });
+        Console.WriteLine(personList.Get(0).Name);
+    }
+}
