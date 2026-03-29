@@ -1,0 +1,45 @@
+using System;
+enum Operation
+{
+    Add,
+    Subtract,
+    Multiply,
+    Divide
+}
+
+class Program
+{
+    static double Calculate(double a, double b, Operation op)
+    {
+        switch (op)
+        {
+            case Operation.Add:
+                return a + b;
+
+            case Operation.Subtract:
+                return a - b;
+
+            case Operation.Multiply:
+                return a * b;
+
+            case Operation.Divide:
+                if (b == 0)
+                {
+                    Console.WriteLine("Ошибка: деление на ноль");
+                    return 0;
+                }
+                return a / b;
+
+            default:
+                return 0;
+        }
+    }
+
+    static void Main()
+    {
+        Console.WriteLine("Сложение: " + Calculate(10, 5, Operation.Add));
+        Console.WriteLine("Вычитание: " + Calculate(10, 5, Operation.Subtract));
+        Console.WriteLine("Умножение: " + Calculate(10, 5, Operation.Multiply));
+        Console.WriteLine("Деление: " + Calculate(10, 5, Operation.Divide));
+    }
+}
