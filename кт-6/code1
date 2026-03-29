@@ -1,0 +1,41 @@
+using System;
+
+enum DayOfWeekCustom
+{
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}
+
+class Program
+{
+    static void PrintDay(DayOfWeekCustom day)
+    {
+        switch (day)
+        {
+            case DayOfWeekCustom.Monday:
+                Console.WriteLine("Понедельник"); break;
+            case DayOfWeekCustom.Tuesday:
+                Console.WriteLine("Вторник"); break;
+            case DayOfWeekCustom.Wednesday:
+                Console.WriteLine("Среда"); break;
+            case DayOfWeekCustom.Thursday:
+                Console.WriteLine("Четверг"); break;
+            case DayOfWeekCustom.Friday:
+                Console.WriteLine("Пятница"); break;
+            case DayOfWeekCustom.Saturday:
+                Console.WriteLine("Суббота"); break;
+            case DayOfWeekCustom.Sunday:
+                Console.WriteLine("Воскресенье"); break;
+        }
+    }
+
+    static void Main()
+    {
+        PrintDay(DayOfWeekCustom.Monday);
+    }
+}
