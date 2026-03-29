@@ -1,0 +1,65 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // 1
+        try
+        {
+            int a = 10;
+            int b = 0;
+            int result = a / b;
+        }
+        catch (DivideByZeroException)
+        {
+            Console.WriteLine("Ошибка: деление на ноль");
+        }
+
+        // 2
+        try
+        {
+            int number = int.Parse("abc");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Ошибка: неверный формат данных");
+        }
+
+        // 3
+        try
+        {
+            int[] arr = new int[3];
+            Console.WriteLine(arr[5]);
+        }
+        catch (IndexOutOfRangeException)
+        {
+            Console.WriteLine("Ошибка: индекс вне диапазона");
+        }
+
+        // 4
+        try
+        {
+            string s = null;
+            Console.WriteLine(s.Length);
+        }
+        catch (NullReferenceException)
+        {
+            Console.WriteLine("Ошибка: объект не создан (null)");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Общая ошибка: " + ex.Message);
+        }
+
+        // 5
+        try
+        {
+            Console.WriteLine("Работа с ресурсом");
+        }
+        finally
+        {
+            Console.WriteLine("Блок finally выполнен");
+        }
+    }
+}
