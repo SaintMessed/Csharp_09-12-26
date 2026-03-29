@@ -1,0 +1,59 @@
+using System;
+interface IClonable<T> where T : class
+{
+    T Clone();
+}
+
+class Point : IClonable<Point>
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public Point() { }
+
+    public Point(Point other)
+    {
+        X = other.X;
+        Y = other.Y;
+    }
+
+    public Point Clone()
+    {
+        return new Point(this);
+    }
+}
+
+class Rectangle : IClonable<Rectangle>
+{
+    public int Width { get; set; }
+    public int Height { get; set; }
+    public Rectangle() { }
+    public Rectangle(Rectangle other)
+    {
+        Width = other.Width;
+        Height = other.Height;
+    }
+
+    public Rectangle Clone()
+    {
+        return new Rectangle(this);
+    }
+}
+
+class Program
+{
+    static T MakeClone<T>(T obj) where T : class, IClonable<T>
+    {
+        return obj.Clone();
+    }
+
+    static void Main()
+    {
+        Point p1 = new Point { X = 5, Y = 10 };
+        Point p2 = MakeClone(p1);
+        Console.WriteLine($"Клон точки: {p2.X}, {p2.Y}");
+        Rectangle r1 = new Rectangle { Width = 10, Height = 20 };
+        Rectangle r2 = MakeClone(r1);
+
+        Console.WriteLine($"Клон прямоугольника: {r2.Width}, {r2.Height}");
+    }
+}
