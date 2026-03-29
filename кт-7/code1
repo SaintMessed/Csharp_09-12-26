@@ -1,0 +1,59 @@
+using System;
+
+interface IConverter<in T, out U>
+{
+    U Convert(T value);
+}
+
+class StringToIntConverter : IConverter<string, int>
+{
+    public int Convert(string value)
+    {
+        return int.Parse(value);
+    }
+}
+
+class ObjectToStringConverter : IConverter<object, string>
+{
+    public string Convert(object value)
+    {
+        return value.ToString();
+    }
+}
+
+class Program
+{
+    static U[] ConvertArray<T, U>(T[] array, IConverter<T, U> converter)
+    {
+        U[] result = new U[array.Length];
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            result[i] = converter.Convert(array[i]);
+        }
+
+        return result;
+    }
+
+    static void Main()
+    {
+        string[] numbers = { "1", "2", "3" };
+        IConverter<string, int> stringToInt = new StringToIntConverter();
+
+        int[] intResult = ConvertArray(numbers, stringToInt);
+
+        Console.WriteLine("String -> Int:");
+        foreach (var i in intResult)
+            Console.WriteLine(i);
+
+        IConverter<object, string> objToStr = new ObjectToStringConverter();
+
+        string[] words = { "hello", "world" };
+
+        var stringResult = ConvertArray(words, objToStr);
+
+        Console.WriteLine("ковариантность");
+        foreach (var s in stringResult)
+            Console.WriteLine(s);
+    }
+}
