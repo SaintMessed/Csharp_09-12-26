@@ -1,0 +1,50 @@
+using System;
+interface IMyComparable<T>
+{
+    int CompareTo(T other);
+}
+
+struct ComplexNumber : IMyComparable<ComplexNumber>
+{
+    public double Real;
+    public double Imaginary;
+
+    public double Magnitude()
+    {
+        return Math.Sqrt(Real * Real + Imaginary * Imaginary);
+    }
+
+    public int CompareTo(ComplexNumber other)
+    {
+        return Magnitude().CompareTo(other.Magnitude());
+    }
+}
+
+struct RationalNumber : IMyComparable<RationalNumber>
+{
+    public int Numerator;
+    public int Denominator;
+
+    public double ToDouble()
+    {
+        return (double)Numerator / Denominator;
+    }
+
+    public int CompareTo(RationalNumber other)
+    {
+        return ToDouble().CompareTo(other.ToDouble());
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        ComplexNumber c1 = new ComplexNumber { Real = 3, Imaginary = 4 };
+        ComplexNumber c2 = new ComplexNumber { Real = 1, Imaginary = 1 };
+        Console.WriteLine("Сравнение комплексных: " + c1.CompareTo(c2));
+        RationalNumber r1 = new RationalNumber { Numerator = 1, Denominator = 2 };
+        RationalNumber r2 = new RationalNumber { Numerator = 3, Denominator = 4 };
+        Console.WriteLine("Сравнение дробей: " + r1.CompareTo(r2));
+    }
+}
