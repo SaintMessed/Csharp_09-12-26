@@ -1,0 +1,39 @@
+using System;
+
+interface IAnimal
+{
+    string Name { get; set; }
+    void MakeSound();
+}
+
+class Dog : IAnimal
+{
+    public string Name { get; set; } = "";
+
+    public void MakeSound()
+    {
+        Console.WriteLine(Name + ": звуки собаки");
+    }
+}
+
+class Cat : IAnimal
+{
+    public string Name { get; set; } = "";
+
+    public void MakeSound()
+    {
+        Console.WriteLine(Name + ": звуки жидкости");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Dog dog = new Dog { Name = "акабос" };
+        Cat cat = new Cat { Name = "акшок" };
+
+        dog.MakeSound();
+        cat.MakeSound();
+    }
+}
