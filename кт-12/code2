@@ -1,0 +1,68 @@
+using System;
+interface IComparer<T>
+{
+    int Compare(T x, T y);
+}
+
+class StringComparer : IComparer<string>
+{
+    public int Compare(string x, string y)
+    {
+        return x.Length.CompareTo(y.Length);
+    }
+}
+
+class Book
+{
+    public string Title { get; set; } = "";
+    public double Price { get; set; }
+}
+
+class BookComparer : IComparer<Book>
+{
+    public int Compare(Book x, Book y)
+    {
+        return x.Price.CompareTo(y.Price);
+    }
+}
+
+class Program
+{
+    static void Sort<T>(T[] array, IComparer<T> comparer)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            for (int j = i + 1; j < array.Length; j++)
+            {
+                if (comparer.Compare(array[i], array[j]) > 0)
+                {
+                    T temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+    }
+
+    static void Main()
+    {
+        string[] words = { "one", "three", "two" };
+        Sort(words, new StringComparer());
+
+        Console.WriteLine("Строки:");
+        foreach (var w in words)
+            Console.WriteLine(w);
+
+        Book[] books =
+        {
+            new Book { Title = "A", Price = 300 },
+            new Book { Title = "B", Price = 100 }
+        };
+
+        Sort(books, new BookComparer());
+
+        Console.WriteLine("Книги:");
+        foreach (var b in books)
+            Console.WriteLine($"{b.Title} - {b.Price}");
+    }
+}
