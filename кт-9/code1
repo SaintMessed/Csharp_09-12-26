@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+
+class Stack<T> where T : IComparable<T>
+{
+    private List<T> items = new List<T>();
+
+    public void Push(T item)
+    {
+        items.Add(item);
+    }
+
+    public T Pop()
+    {
+        if (items.Count == 0)
+            throw new InvalidOperationException("Стек пуст");
+
+        T item = items[^1];
+        items.RemoveAt(items.Count - 1);
+        return item;
+    }
+
+    public T Max()
+    {
+        if (items.Count == 0)
+            throw new InvalidOperationException("Стек пуст");
+
+        T max = items[0];
+
+        foreach (var item in items)
+        {
+            if (item.CompareTo(max) > 0)
+                max = item;
+        }
+
+        return max;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Stack<int> stack = new Stack<int>();
+
+        stack.Push(3);
+        stack.Push(7);
+        stack.Push(1);
+
+        Console.WriteLine("Max: " + stack.Max());
+    }
+}
