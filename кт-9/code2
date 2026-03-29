@@ -1,0 +1,36 @@
+using System;
+
+class Pair<T, U>
+    where T : class
+    where U : class
+{
+    public T First { get; set; }
+    public U Second { get; set; }
+
+    public Pair(T first, U second)
+    {
+        First = first;
+        Second = second;
+    }
+
+    public void Swap()
+    {
+        object temp = First;
+        First = Second as T;
+        Second = temp as U;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Pair<string, string> pair = new Pair<string, string>("Hello", "World");
+
+        Console.WriteLine($"До: {pair.First}, {pair.Second}");
+
+        pair.Swap();
+
+        Console.WriteLine($"После: {pair.First}, {pair.Second}");
+    }
+}
