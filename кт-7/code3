@@ -1,0 +1,53 @@
+using System;
+
+class Calculator
+{
+    public static double Add(double x, double y)
+    {
+        return x + y;
+    }
+
+    public static double Subtract(double x, double y)
+    {
+        return x - y;
+    }
+
+    public static double Multiply(double x, double y)
+    {
+        return x * y;
+    }
+
+    public static double Divide(double x, double y)
+    {
+        return x / y;
+    }
+}
+
+class Program
+{
+    static double Calculate(double x, double y, Func<double, double, double> operation)
+    {
+        return operation(x, y);
+    }
+
+    static void Main()
+    {
+        double a = 10;
+        double b = 5;
+
+        Console.WriteLine("Add: " + Calculate(a, b, Calculator.Add));
+        Console.WriteLine("Subtract: " + Calculate(a, b, Calculator.Subtract));
+        Console.WriteLine("Multiply: " + Calculate(a, b, Calculator.Multiply));
+        Console.WriteLine("Divide: " + Calculate(a, b, Calculator.Divide));
+
+        Func<double, double, object> op = (x, y) => Calculator.Add(x, y);
+        Console.WriteLine("Covariance result: " + op(2, 3));
+
+        Func<object, object, double> op2 = (x, y) =>
+        {
+            return Convert.ToDouble(x) + Convert.ToDouble(y);
+        };
+
+        Console.WriteLine("Contravariance result: " + op2(2, 3));
+    }
+}
