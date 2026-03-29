@@ -1,0 +1,41 @@
+using System;
+
+class Student : IComparable<Student>
+{
+    public string Name { get; set; } = "";
+    public int Age { get; set; }
+    public double Grade { get; set; }
+
+    public int CompareTo(Student other)
+    {
+        return this.Grade.CompareTo(other.Grade);
+    }
+}
+
+class Book : IComparable<Book>
+{
+    public string Title { get; set; } = "";
+    public string Author { get; set; } = "";
+    public double Price { get; set; }
+
+    public int CompareTo(Book other)
+    {
+        return this.Price.CompareTo(other.Price);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student s1 = new Student { Name = "Вован", Grade = 4.5 };
+        Student s2 = new Student { Name = "Петян", Grade = 3.8 };
+
+        Console.WriteLine("Сравнение студентов: " + s1.CompareTo(s2));
+
+        Book b1 = new Book { Title = "Книга1", Price = 500 };
+        Book b2 = new Book { Title = "Книга2", Price = 300 };
+
+        Console.WriteLine("Сравнение книг: " + b1.CompareTo(b2));
+    }
+}
