@@ -1,0 +1,75 @@
+using System;
+
+class MyNumber
+{
+    public int Value;
+
+    public MyNumber(int value)
+    {
+        Value = value;
+    }
+
+    public static bool operator ==(MyNumber a, MyNumber b)
+    {
+        if (ReferenceEquals(a, b))
+            return true;
+
+        if (a is null || b is null)
+            return false;
+
+        return a.Value == b.Value;
+    }
+
+    public static bool operator !=(MyNumber a, MyNumber b)
+    {
+        return !(a == b);
+    }
+
+    public static bool operator true(MyNumber a)
+    {
+        return a.Value != 0;
+    }
+
+    public static bool operator false(MyNumber a)
+    {
+        return a.Value == 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is MyNumber other)
+            return this == other;
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return Value.GetHashCode();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyNumber a = new MyNumber(10);
+        MyNumber b = new MyNumber(10);
+        MyNumber c = new MyNumber(0);
+
+        Console.WriteLine("a == b: " + (a == b));
+        Console.WriteLine("a != c: " + (a != c));
+
+        Console.WriteLine();
+
+        if (a)
+            Console.WriteLine("a = true");
+        else
+            Console.WriteLine("a = false");
+
+        if (c)
+            Console.WriteLine("c = true");
+        else
+            Console.WriteLine("c = false");
+    }
+}
