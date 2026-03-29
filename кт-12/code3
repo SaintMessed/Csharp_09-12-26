@@ -23,7 +23,7 @@ class PersonFactory : IFactory<Person>
 {
     public Person Create()
     {
-        Console.Write("Введите имя: ");
+        Console.Write("Писать сюда--> ");
         string name = Console.ReadLine();
 
         return new Person { Name = name };
