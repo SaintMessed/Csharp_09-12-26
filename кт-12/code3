@@ -1,0 +1,58 @@
+using System;
+interface IFactory<T>
+{
+    T Create();
+}
+
+class RandomNumberFactory : IFactory<int>
+{
+    private Random random = new Random();
+
+    public int Create()
+    {
+        return random.Next(1, 100);
+    }
+}
+
+class Person
+{
+    public string Name { get; set; } = "";
+}
+
+class PersonFactory : IFactory<Person>
+{
+    public Person Create()
+    {
+        Console.Write("Введите имя: ");
+        string name = Console.ReadLine();
+
+        return new Person { Name = name };
+    }
+}
+class Program
+{
+    static T[] CreateMany<T>(IFactory<T> factory, int n)
+    {
+        T[] result = new T[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            result[i] = factory.Create();
+        }
+
+        return result;
+    }
+
+    static void Main()
+    {
+        var numbers = CreateMany(new RandomNumberFactory(), 5);
+        Console.WriteLine("Числа:");
+        foreach (var n in numbers)
+            Console.WriteLine(n);
+
+        var people = CreateMany(new PersonFactory(), 2);
+        Console.WriteLine("Люди:");
+        foreach (var p in people)
+            Console.WriteLine(p.Name);
+    }
+}
