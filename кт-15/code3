@@ -1,0 +1,63 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+class PrimeNumbers : IEnumerator<int>
+{
+    private int current = 1;
+
+    public int Current => current;
+
+    object IEnumerator.Current => Current;
+
+    public bool MoveNext()
+    {
+        int num = current + 1;
+
+        while (true)
+        {
+            if (IsPrime(num))
+            {
+                current = num;
+                return true;
+            }
+            num++;
+        }
+    }
+    public void Reset()
+    {
+        current = 1;
+    }
+
+    public void Dispose() { }
+
+    private bool IsPrime(int n)
+    {
+        if (n < 2) return false;
+
+        for (int i = 2; i <= Math.Sqrt(n); i++)
+        {
+            if (n % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        PrimeNumbers primes = new PrimeNumbers();
+
+        int count = 0;
+
+        while (count < 10)
+        {
+            if (primes.MoveNext())
+            {
+                Console.WriteLine(primes.Current);
+                count++;
+            }
+        }
+    }
+}
