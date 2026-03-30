@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+class Program
+{
+    static void Main()
+    {
+        string expression = "3+5*2";
+
+        Console.WriteLine("Результат: " + Evaluate(expression));
+    }
+
+    static int Evaluate(string expr)
+    {
+        Dictionary<char, int> priority = new Dictionary<char, int>
+        {
+            ['+'] = 1,
+            ['-'] = 1,
+            ['*'] = 2,
+            ['/'] = 2
+        };
+
+        Stack<int> values = new Stack<int>();
+        Stack<char> ops = new Stack<char>();
+
+        for (int i = 0; i < expr.Length; i++)
+        {
+            char c = expr[i];
+
+            if (char.IsDigit(c))
+            {
+                values.Push(c - '0');
+            }
+            else if (priority.ContainsKey(c))
+            {
+                while (ops.Count > 0 && priority[ops.Peek()] >= priority[c])
+                {
+                    int b = values.Pop();
+                    int a = values.Pop();
+                    char op = ops.Pop();
+
+                    values.Push(Apply(a, b, op));
+                }
+
+                ops.Push(c);
+            }
+        }
+
+        while (ops.Count > 0)
+        {
+            int b = values.Pop();
+            int a = values.Pop();
+            char op = ops.Pop();
+
+            values.Push(Apply(a, b, op));
+        }
+
+        return values.Pop();
+    }
+    static int Apply(int a, int b, char op)
+    {
+        return op switch
+        {
+            '+' => a + b,
+            '-' => a - b,
+            '*' => a * b,
+            '/' => a / b,
+            _ => 0
+        };
+    }
+}
