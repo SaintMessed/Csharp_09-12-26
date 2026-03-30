@@ -1,0 +1,45 @@
+using System;
+using System.IO;
+class FileReader : IDisposable
+{
+    private StreamReader reader;
+
+    public FileReader(string path)
+    {
+        reader = new StreamReader(path);
+    }
+
+    public string ReadAll()
+    {
+        return reader.ReadToEnd();
+    }
+
+    public void Dispose()
+    {
+        if (reader != null)
+        {
+            reader.Dispose();
+            reader = null;
+        }
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string filePath = Path.Combine(desktopPath, "text.txt");
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл text.txt не найден на рабочем столе!");
+            return;
+        }
+
+        using (FileReader fr = new FileReader(filePath))
+        {
+            string content = fr.ReadAll();
+            Console.WriteLine(content);
+        }
+    }
+}
