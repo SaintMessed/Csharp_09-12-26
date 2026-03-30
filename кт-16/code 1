@@ -1,0 +1,34 @@
+using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Создание объектов...");
+        List<byte[]> data = new List<byte[]>();
+
+        for (int i = 0; i < 100000; i++)
+        {
+            data.Add(new byte[1024]); // создаём мусор
+        }
+
+        MeasureGC("Обычный GC");
+
+        Console.WriteLine("Готово");
+    }
+    static void MeasureGC(string mode)
+    {
+        Stopwatch sw = new Stopwatch();
+
+        sw.Start();
+
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        sw.Stop();
+
+        Console.WriteLine($"{mode}: {sw.ElapsedMilliseconds} ms");
+    }
+}
