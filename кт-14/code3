@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+class Program
+{
+    static void Main()
+    {
+        Dictionary<string, string> capitals = new Dictionary<string, string>
+        {
+            ["Россия"] = "Москва",
+            ["Франция"] = "Париж",
+            ["Германия"] = "Берлин"
+        };
+
+        Dictionary<string, int> population = new Dictionary<string, int>
+        {
+            ["Россия"] = 146000000,
+            ["Франция"] = 67000000,
+            ["Германия"] = 83000000
+        };
+        Console.Write("Введите страну: ");
+        string country = Console.ReadLine();
+
+        if (capitals.ContainsKey(country) && population.ContainsKey(country))
+        {
+            Console.WriteLine($"Столица: {capitals[country]}");
+            Console.WriteLine($"Население: {population[country]}");
+        }
+        else
+        {
+            Console.WriteLine("Страна не найдена");
+        }
+    }
+}
