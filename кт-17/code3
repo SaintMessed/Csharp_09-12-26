@@ -1,0 +1,37 @@
+using System;
+using System.Drawing;
+class BitmapImage : IDisposable
+{
+    private Bitmap bitmap;
+    public void Load(string path)
+    {
+        bitmap = new Bitmap(path);
+    }
+
+    public void Save(string path)
+    {
+        bitmap.Save(path);
+    }
+
+    public void Dispose()
+    {
+        if (bitmap != null)
+        {
+            bitmap.Dispose();
+            bitmap = null;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        using (BitmapImage img = new BitmapImage())
+        {
+            img.Load("input.bmp");
+            img.Save("output.bmp");
+            Console.WriteLine("Изображение обработано");
+        }
+    }
+}
