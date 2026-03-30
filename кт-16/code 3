@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Начало NoGCRegion");
+
+        if (GC.TryStartNoGCRegion(10_000_000))
+        {
+            List<byte[]> data = new List<byte[]>();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                data.Add(new byte[1000]);
+            }
+
+            Console.WriteLine("Созданы объекты без GC");
+
+            GC.EndNoGCRegion();
+        }
+        else
+        {
+            Console.WriteLine("Не удалось включить NoGCRegion");
+        }
+
+        Console.WriteLine("Фоновый GC активен: " + GCSettings.IsServerGC);
+    }
+}
