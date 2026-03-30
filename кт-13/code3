@@ -1,0 +1,42 @@
+using System;
+class Book
+{
+    public string Title { get; set; } = "";
+
+    public override string ToString()
+    {
+        return $"язва: {Title}";
+    }
+}
+
+class Program
+{
+    static void Print<T>(T[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            Console.Write(array[i]);
+
+            if (i < array.Length - 1)
+                Console.Write(", ");
+        }
+
+        Console.WriteLine();
+    }
+
+    static void Main()
+    {
+        int[] numbers = { 1, 2, 3 };
+        Print(numbers);
+
+        string[] words = { "один", "два", "три" };
+        Print(words);
+
+        Book[] books =
+        {
+            new Book { Title = "C#" },
+            new Book { Title = "Java" }
+        };
+        Print(books);
+    }
+}
