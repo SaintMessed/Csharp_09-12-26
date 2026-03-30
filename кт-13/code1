@@ -1,0 +1,14 @@
+using System;
+class Program
+{
+    static T Max<T>(T x, T y) where T : IComparable<T>
+    {
+        return x.CompareTo(y) > 0 ? x : y;
+    }
+    static void Main()
+    {
+        Console.WriteLine("int: " + Max(5, 10));
+        Console.WriteLine("string: " + Max("фрукт", "овощ"));
+        Console.WriteLine("DateTime: " + Max(DateTime.Now, DateTime.Now.AddDays(1)));
+    }
+}
