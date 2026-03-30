@@ -1,0 +1,41 @@
+using System;
+using System.Data.SqlClient;
+class DatabaseConnection : IDisposable
+{
+    private SqlConnection connection;
+    public DatabaseConnection(string connectionString)
+    {
+        connection = new SqlConnection(connectionString);
+        connection.Open();
+    }
+
+    public void ExecuteQuery(string query)
+    {
+        SqlCommand cmd = new SqlCommand(query, connection);
+        cmd.ExecuteNonQuery();
+    }
+
+    public void Dispose()
+    {
+        if (connection != null)
+        {
+            connection.Close();
+            connection.Dispose();
+            connection = null;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        string connStr = "your_connection_string_here";
+
+        using (DatabaseConnection db = new DatabaseConnection(connStr))
+        {
+            db.ExecuteQuery("SELECT 1");
+            Console.WriteLine("Запрос выполнен");
+        }
+    }
+}
